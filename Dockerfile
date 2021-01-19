@@ -10,6 +10,7 @@ RUN set -x && \
         iputils-ping \
         dnsutils \
         iptables \
+        tcpdump \
         less \
         tree \
         vim \

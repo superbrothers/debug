@@ -6,9 +6,12 @@ RUN set -x && \
     apt update && \
     apt install -y \
         net-tools \
+        iproute2 \
         iputils-ping \
         dnsutils \
         iptables \
+        less \
+        tree \
         vim \
         curl \
         bash && \

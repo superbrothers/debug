@@ -17,5 +17,3 @@ RUN set -x && \
         curl \
         bash && \
     rm -rf /var/lib/apt/lists/*
-
-ENTRYPOINT ["/bin/bash"]

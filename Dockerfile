@@ -18,3 +18,7 @@ RUN set -x && \
         curl \
         bash && \
     rm -rf /var/lib/apt/lists/*
+
+RUN set -x && \
+    curl -L -o /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    chmod +x /usr/local/bin/kubectl

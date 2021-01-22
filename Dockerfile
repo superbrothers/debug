@@ -14,6 +14,7 @@ RUN set -x && \
         less \
         tree \
         vim \
+        strace \
         curl \
         bash && \
     rm -rf /var/lib/apt/lists/*

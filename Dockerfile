@@ -5,8 +5,11 @@ LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 RUN set -x && \
     apt update && \
     apt install -y \
+        iperf \
         net-tools \
         iproute2 \
+        traceroute \
+        openssh-client \
         iputils-ping \
         dnsutils \
         iptables \

@@ -14,6 +14,7 @@ RUN set -x && \
         dnsutils \
         iptables \
         tcpdump \
+        nmap \
         netcat \
         less \
         tree \

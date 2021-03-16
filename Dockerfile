@@ -32,3 +32,11 @@ RUN set -x && \
 RUN set -x && \
     curl -L -o /usr/local/bin/hey https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64 && \
     chmod +x /usr/local/bin/hey
+
+ARG BANDWHICH_VERSION=0.20.0
+RUN set -x && \
+    curl -L -o bandwhich.tgz "https://github.com/imsnif/bandwhich/releases/download/${BANDWHICH_VERSION}/bandwhich-v${BANDWHICH_VERSION}-x86_64-unknown-linux-musl.tar.gz" && \
+    tar xvzf bandwhich.tgz && \
+    mv bandwhich /usr/local/bin && \
+    bandwhich --version && \
+    rm bandwhich.tgz

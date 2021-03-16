@@ -9,3 +9,7 @@ build:
 .PHONY: push
 push:
 	docker push $(IMG)
+
+.PHONY: run
+run:
+	docker run --rm -it $(IMG) /bin/bash

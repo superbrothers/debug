@@ -16,6 +16,7 @@ RUN set -x && \
         tcpdump \
         nmap \
         netcat \
+        iperf3 \
         less \
         tree \
         vim \

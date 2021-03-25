@@ -40,3 +40,8 @@ RUN set -x && \
     mv bandwhich /usr/local/bin && \
     bandwhich --version && \
     rm bandwhich.tgz
+
+ARG DUF_VERSION=0.6.0
+RUN set -x && \
+    curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_amd64.deb" && \
+    dpkg -i duf.deb

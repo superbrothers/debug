@@ -11,8 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Login to GitHub Container Registry
-      run: echo "$PAT" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+      run: echo "$GITHUB_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
       env:
-        PAT: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: make build
     - run: make push

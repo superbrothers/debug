@@ -1,6 +1,16 @@
+FROM rust:1.51 AS bandwhich
+
+ARG BANDWHICH_VERSION=0.20.0
+
+RUN set -x && \
+    cargo install bandwhich && \
+    /usr/local/cargo/bin/bandwhich --version
+
 FROM ubuntu:20.04
 
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
+
+ARG TARGETARCH
 
 RUN set -x && \
     apt update && \
@@ -26,22 +36,17 @@ RUN set -x && \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -x && \
-    curl -L -o /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    curl -L -o /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl" && \
     chmod +x /usr/local/bin/kubectl
 
 RUN set -x && \
-    curl -L -o /usr/local/bin/hey https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64 && \
+    curl -L -o /usr/local/bin/hey "https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_${TARGETARCH}" && \
     chmod +x /usr/local/bin/hey
 
-ARG BANDWHICH_VERSION=0.20.0
-RUN set -x && \
-    curl -L -o bandwhich.tgz "https://github.com/imsnif/bandwhich/releases/download/${BANDWHICH_VERSION}/bandwhich-v${BANDWHICH_VERSION}-x86_64-unknown-linux-musl.tar.gz" && \
-    tar xvzf bandwhich.tgz && \
-    mv bandwhich /usr/local/bin && \
-    bandwhich --version && \
-    rm bandwhich.tgz
+# bandwhich is not available as a binary for arm64
+COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 
 ARG DUF_VERSION=0.6.0
 RUN set -x && \
-    curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_amd64.deb" && \
+    curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${TARGETARCH}.deb" && \
     dpkg -i duf.deb

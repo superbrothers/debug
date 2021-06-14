@@ -1,10 +1,20 @@
-FROM rust:1.51 AS bandwhich
+ARG RUST_VERSION=1.51
 
-ARG BANDWHICH_VERSION=0.20.0
+FROM rust:${RUST_VERSION} AS bandwhich
 
 RUN set -x && \
     cargo install bandwhich && \
     /usr/local/cargo/bin/bandwhich --version
+
+FROM rust:${RUST_VERSION} AS dog
+
+ARG DOG_VERSION=v0.1.0
+
+RUN set -x && \
+    git clone -b "${DOG_VERSION}" --depth 1 https://github.com/ogham/dog.git && \
+    cd dog && \
+    cargo build --release && \
+    ./target/release/dog --version
 
 FROM ubuntu:20.04
 
@@ -43,8 +53,8 @@ RUN set -x && \
     curl -L -o /usr/local/bin/hey "https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_${TARGETARCH}" && \
     chmod +x /usr/local/bin/hey
 
-# bandwhich is not available as a binary for arm64
 COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
+COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
 
 ARG DUF_VERSION=0.6.0
 RUN set -x && \

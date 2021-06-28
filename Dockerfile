@@ -42,7 +42,9 @@ RUN set -x && \
         vim \
         strace \
         curl \
-        bash && \
+        bash \
+        # perf
+        linux-tools-common linux-tools-generic linux-tools-`uname -r` && \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -x && \

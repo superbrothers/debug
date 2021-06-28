@@ -43,8 +43,7 @@ RUN set -x && \
         strace \
         curl \
         bash \
-        # perf
-        linux-tools-common linux-tools-generic linux-tools-`uname -r` && \
+        && \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -x && \

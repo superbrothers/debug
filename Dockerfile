@@ -43,6 +43,7 @@ RUN set -x && \
         strace \
         curl \
         bash \
+        sysstat \
         && \
     rm -rf /var/lib/apt/lists/*
 

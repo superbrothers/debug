@@ -44,6 +44,7 @@ RUN set -x && \
         curl \
         bash \
         sysstat \
+        iotop \
         && \
     rm -rf /var/lib/apt/lists/*
 

@@ -45,6 +45,7 @@ RUN set -x && \
         bash \
         sysstat \
         iotop \
+        htop \
         && \
     rm -rf /var/lib/apt/lists/*
 

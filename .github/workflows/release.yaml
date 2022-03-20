@@ -1,0 +1,18 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+    paths-ignore: ['**.md']
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to GitHub Container Registry
+      run: echo "$GITHUB_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: make build-all
+    - run: make all-push

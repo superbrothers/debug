@@ -64,7 +64,7 @@ COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
 
 # renovate: datasource=github-releases depName=muesli/duf
-ARG DUF_VERSION=0.6.0
+ARG DUF_VERSION=v0.8.1
 RUN set -x && \
     curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${TARGETARCH}.deb" && \
     dpkg -i duf.deb

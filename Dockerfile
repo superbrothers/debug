@@ -55,6 +55,8 @@ RUN set -x && \
         && \
     rm -rf /var/lib/apt/lists/*
 
+SHELL ["/bin/bash", "-c"]
+
 RUN set -x && \
     curl -L -o /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl" && \
     chmod +x /usr/local/bin/kubectl
@@ -66,5 +68,5 @@ COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
 # renovate: datasource=github-releases depName=muesli/duf
 ARG DUF_VERSION=v0.8.1
 RUN set -x && \
-    curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${TARGETARCH}.deb" && \
+    curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/${DUF_VERSION}/duf_${DUF_VERSION/v/}_linux_${TARGETARCH}.deb" && \
     dpkg -i duf.deb

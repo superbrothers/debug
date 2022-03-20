@@ -5,14 +5,14 @@
   "labels": ["renovate"],
   "regexManagers": [
     {
-      "fileMatch": ["/Makefile$"],
+      "fileMatch": ["^Makefile$"],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=(?<datasource>.*?)\\s+depName=(?<depName>.*?)(\\s+versioning=(?<versioning>.*?))?(\\s+registry=(?<registryUrl>.*?))?\\s.*?_VERSION\\s+[^=]?=\\s+(?<currentValue>.*)\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
     {
-      "fileMatch": ["/Dockerfile$"],
+      "fileMatch": ["^Dockerfile$"],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=(?<datasource>.*?)\\s+depName=(?<depName>.*?)(\\s+versioning=(?<versioning>.*?))?(\\s+registry=(?<registryUrl>.*?))?\\sARG\\s+.*?_VERSION=(?<currentValue>.*)\\s"
       ],

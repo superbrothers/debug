@@ -1,4 +1,4 @@
-FROM rust:1.51 AS rustbase
+FROM rust:1.59 AS rustbase
 
 FROM rustbase AS bandwhich
 # renovate: datasource=crate depName=bandwhich

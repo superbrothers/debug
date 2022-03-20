@@ -2,12 +2,13 @@ REGISTRY ?= ghcr.io/superbrothers
 IMAGE ?= $(REGISTRY)/debug
 ARCH ?= amd64
 ALL_ARCH ?= amd64 arm64
+# renovate: datasource=docker depName=docker.io/multiarch/qemu-user-static versioning=docker
 QEMU_VERSION ?= 5.2.0-2
 
 .PHONY: build
 build:
 ifneq ($(ARCH),amd64)
-	docker run --rm --privileged multiarch/qemu-user-static:$(QEMU_VERSION) --reset -p yes
+	docker run --rm --privileged docker.io/multiarch/qemu-user-static:$(QEMU_VERSION) --reset -p yes
 	docker buildx version
 	BUILDER=$$(docker buildx create --use)
 endif

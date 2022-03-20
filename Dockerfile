@@ -8,7 +8,7 @@ RUN set -x && \
     /usr/local/cargo/bin/bandwhich --version
 
 FROM rustbase AS dog
-# renovate: datasource=github-release depName=ogham/dog
+# renovate: datasource=github-releases depName=ogham/dog
 ARG DOG_VERSION=v0.1.0
 RUN set -x && \
     git clone -b "${DOG_VERSION}" --depth 1 https://github.com/ogham/dog.git && \
@@ -17,7 +17,7 @@ RUN set -x && \
     ./target/release/dog --version
 
 FROM golang:1.18 AS hey
-# renovate: datasource=github-release depName=rakyll/hey
+# renovate: datasource=github-releases depName=rakyll/hey
 ARG HEY_VERSION=v0.1.4
 ARG TARGETOS
 ARG TARGETARCH
@@ -63,7 +63,7 @@ COPY --from=hey /go/bin/hey /usr/local/bin/hey
 COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
 
-# renovate: datasource=github-release depName=muesli/duf
+# renovate: datasource=github-releases depName=muesli/duf
 ARG DUF_VERSION=0.6.0
 RUN set -x && \
     curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${TARGETARCH}.deb" && \

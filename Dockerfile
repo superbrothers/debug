@@ -65,13 +65,15 @@ RUN set -x && \
 ARG DUF_VERSION=v0.8.1
 RUN set -x && \
     curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/${DUF_VERSION}/duf_${DUF_VERSION/v/}_linux_${TARGETARCH}.deb" && \
-    dpkg -i duf.deb
+    dpkg -i duf.deb && \
+    rm duf.deb
 
 # renovate: datasource=github-releases depName=sharkdp/bat
 ARG BAT_VERSION=v0.20.0
 RUN set -x && \
     curl -L -o bat.deb "https://github.com/sharkdp/bat/releases/download/${BAT_VERSION}/bat_${BAT_VERSION/v/}_${TARGETARCH}.deb" && \
-    dpkg -i bat.deb
+    dpkg -i bat.deb && \
+    rm bat.deb
 
 COPY --from=hey /go/bin/hey /usr/local/bin/hey
 COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich

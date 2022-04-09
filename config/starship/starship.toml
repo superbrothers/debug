@@ -1,0 +1,18 @@
+[username]
+    show_always = true
+
+[time]
+    disabled = false
+
+[shell]
+    disabled = false
+
+[hostname]
+    ssh_only = false
+
+[localip]
+    ssh_only = false
+    disabled = false
+
+[container]
+    disabled = true

@@ -41,6 +41,7 @@ RUN set -x && \
         bash \
         curl \
         dnsutils \
+        git \
         htop \
         iotop \
         iperf \

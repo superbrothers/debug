@@ -46,8 +46,10 @@ RUN set -x && \
     apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
         bash \
+        build-essential \
         ca-certificates \
         curl \
+        dhcpdump \
         dnsutils \
         git \
         htop \

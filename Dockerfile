@@ -24,6 +24,13 @@ RUN set -x && \
     cargo install gping --version "${GPING_VERSION/gping-v/}" && \
     /usr/local/cargo/bin/gping --version
 
+FROM rustbase AS starship
+# renovate: datasource=github-releases depName=starship/starship
+ARG STARSHIP_VERSION=v1.5.4
+RUN set -x && \
+    cargo install starship --version "${STARSHIP_VERSION/v/}" && \
+    /usr/local/cargo/bin/starship --version
+
 FROM golang:1.18 AS hey
 # renovate: datasource=github-releases depName=rakyll/hey
 ARG HEY_VERSION=v0.1.4
@@ -87,3 +94,9 @@ COPY --from=hey /go/bin/hey /usr/local/bin/hey
 COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
 COPY --from=gping /usr/local/cargo/bin/gping /usr/local/bin/gping
+COPY --from=starship /usr/local/cargo/bin/starship /usr/local/bin/starship
+
+# settings for starship
+RUN set -x && \
+    echo 'eval "$(starship init bash)"' >>/root/.bashrc
+COPY config/starship/starship.toml /root/.config/starship.toml

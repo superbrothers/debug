@@ -44,8 +44,9 @@ LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
 RUN set -x && \
     apt update && \
-    apt install -y \
+    DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
         bash \
+        ca-certificates \
         curl \
         dnsutils \
         git \

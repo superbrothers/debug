@@ -38,28 +38,28 @@ ARG TARGETARCH
 RUN set -x && \
     apt update && \
     apt install -y \
-        iperf \
-        net-tools \
-        iproute2 \
-        traceroute \
-        openssh-client \
-        iputils-ping \
+        bash \
+        curl \
         dnsutils \
-        iptables \
-        tcpdump \
-        nmap \
-        netcat \
+        htop \
+        iotop \
+        iperf \
         iperf3 \
+        iproute2 \
+        iptables \
+        iputils-ping \
         less \
+        net-tools \
+        netcat \
+        nmap \
+        openssh-client \
+        strace \
+        sysbench \
+        sysstat \
+        tcpdump \
+        traceroute \
         tree \
         vim \
-        strace \
-        curl \
-        bash \
-        sysstat \
-        iotop \
-        htop \
-        sysbench \
         && \
     rm -rf /var/lib/apt/lists/*
 

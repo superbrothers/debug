@@ -1,4 +1,5 @@
 FROM rust:1.60 AS rustbase
+SHELL ["/bin/bash", "-c"]
 
 FROM rustbase AS bandwhich
 # renovate: datasource=crate depName=bandwhich
@@ -15,6 +16,13 @@ RUN set -x && \
     cd dog && \
     cargo build --release && \
     ./target/release/dog --version
+
+FROM rustbase AS gping
+# renovate: datasource=github-releases depName=orf/gping
+ARG GPING_VERSION=gping-v1.3.1
+RUN set -x && \
+    cargo install gping --version "${GPING_VERSION/gping-v/}" && \
+    /usr/local/cargo/bin/gping --version
 
 FROM golang:1.18 AS hey
 # renovate: datasource=github-releases depName=rakyll/hey
@@ -78,3 +86,4 @@ RUN set -x && \
 COPY --from=hey /go/bin/hey /usr/local/bin/hey
 COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
+COPY --from=gping /usr/local/cargo/bin/gping /usr/local/bin/gping

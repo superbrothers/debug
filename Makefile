@@ -5,17 +5,23 @@ ALL_ARCH ?= amd64 arm64
 # renovate: datasource=docker depName=docker.io/multiarch/qemu-user-static versioning=docker
 QEMU_VERSION ?= 5.2.0-2
 
+DOCKER_BUILDX_BUILD_FLAGS :=
+ifeq ($(PULL_CACHE),1)
+DOCKER_BUILDX_BUILD_FLAGS += --cache-from=type=registry,ref=$(IMAGE)-$(ARCH):buildcache
+endif
+ifeq ($(PUSH_CACHE),1)
+DOCKER_BUILDX_BUILD_FLAGS += --cache-to=type=registry,ref=$(IMAGE)-$(ARCH):buildcache
+endif
+
 .PHONY: build
 build:
 ifneq ($(ARCH),amd64)
 	docker run --rm --privileged docker.io/multiarch/qemu-user-static:$(QEMU_VERSION) --reset -p yes
+endif
 	docker buildx version
-	BUILDER=$$(docker buildx create --use)
-endif
-	docker buildx build --pull --load --platform $(ARCH) -t $(IMAGE)-$(ARCH) .
-ifneq ($(ARCH),amd64)
+	BUILDER=$$(docker buildx create --use --driver docker-container)
+	docker buildx build --pull --load --platform $(ARCH) -t $(IMAGE)-$(ARCH) $(DOCKER_BUILDX_BUILD_FLAGS) .
 	docker buildx rm "$${BUILDER}"
-endif
 
 build-%:
 	$(MAKE) ARCH=$* build

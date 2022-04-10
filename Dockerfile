@@ -1,5 +1,4 @@
 FROM rust:1.60 AS rustbase
-SHELL ["/bin/bash", "-c"]
 
 FROM curlimages/curl:7.82.0 AS curlbase
 WORKDIR /home/curl_user

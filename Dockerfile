@@ -1,6 +1,9 @@
 FROM rust:1.60 AS rustbase
 SHELL ["/bin/bash", "-c"]
 
+FROM curlimages/curl:7.82.0 AS curlbase
+WORKDIR /home/curl_user
+
 FROM rustbase AS bandwhich
 # renovate: datasource=crate depName=bandwhich
 ARG BANDWHICH_VERSION=0.20.0
@@ -17,19 +20,28 @@ RUN set -x && \
     cargo build --release && \
     ./target/release/dog --version
 
-FROM rustbase AS gping
+FROM curlbase AS gping
 # renovate: datasource=github-releases depName=orf/gping
 ARG GPING_VERSION=gping-v1.3.1
 RUN set -x && \
-    cargo install gping --version "${GPING_VERSION/gping-v/}" && \
-    /usr/local/cargo/bin/gping --version
+    curl -sL https://github.com/orf/gping/releases/download/${GPING_VERSION}/gping-$(uname -m)-unknown-linux-musl.tar.gz | tar xz gping && \
+    ./gping --version
 
-FROM rustbase AS starship
+FROM curlbase AS starship
 # renovate: datasource=github-releases depName=starship/starship
 ARG STARSHIP_VERSION=v1.5.4
 RUN set -x && \
-    cargo install starship --version "${STARSHIP_VERSION/v/}" && \
-    /usr/local/cargo/bin/starship --version
+    curl -sL https://github.com/starship/starship/releases/download/${STARSHIP_VERSION}/starship-$(uname -m)-unknown-linux-musl.tar.gz | tar xz starship && \
+    ./starship --version
+
+FROM curlbase AS kubectl
+ARG TARGETARCH
+# renovate: datasource=github-releases depName=kubernetes/kubernetes
+ARG KUBECTL_VERSION=v1.23.5
+RUN set -x && \
+    curl -sLO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" && \
+    chmod +x kubectl && \
+    ./kubectl version --client
 
 FROM golang:1.18 AS hey
 # renovate: datasource=github-releases depName=rakyll/hey
@@ -38,16 +50,6 @@ ARG TARGETOS
 ARG TARGETARCH
 RUN set -x && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go install "github.com/rakyll/hey@${HEY_VERSION}"
-
-FROM curlimages/curl AS kubectl
-WORKDIR /home/curl_user
-ARG TARGETARCH
-# renovate: datasource=github-releases depName=kubernetes/kubernetes
-ARG KUBECTL_VERSION=v1.23.5
-RUN set -x && \
-    curl -sLO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" && \
-    chmod +x kubectl && \
-    ./kubectl version --client
 
 FROM ubuntu:20.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
@@ -103,8 +105,8 @@ RUN set -x && \
 COPY --from=hey /go/bin/hey /usr/local/bin/hey
 COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=dog /dog/target/release/dog /usr/local/bin/dog
-COPY --from=gping /usr/local/cargo/bin/gping /usr/local/bin/gping
-COPY --from=starship /usr/local/cargo/bin/starship /usr/local/bin/starship
+COPY --from=gping /home/curl_user/gping /usr/local/bin/gping
+COPY --from=starship /home/curl_user/starship /usr/local/bin/starship
 COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/kubectl
 
 # settings for starship

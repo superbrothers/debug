@@ -10,7 +10,7 @@ ifeq ($(PULL_CACHE),1)
 DOCKER_BUILDX_BUILD_FLAGS += --cache-from=type=registry,ref=$(IMAGE)-$(ARCH):buildcache
 endif
 ifeq ($(PUSH_CACHE),1)
-DOCKER_BUILDX_BUILD_FLAGS += --cache-to=type=registry,ref=$(IMAGE)-$(ARCH):buildcache
+DOCKER_BUILDX_BUILD_FLAGS += --cache-to=type=registry,ref=$(IMAGE)-$(ARCH):buildcache,mode=max
 endif
 
 .PHONY: build

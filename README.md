@@ -5,13 +5,27 @@ You can see which utilities are included in a container image in [Dockerfile](Do
 
 ## Usage
 
-**On your host:**
+### On your host
 
 ```
 docker run -it --rm --net=host --pid=host ghcr.io/superbrothers/debug
 ```
 
-**Kubernetes:**
+### Kubernetes
+
+Run a debugging container in your Kubernetes cluster:
+
+```
+kubectl run --rm -it debug-$(date +%s) --image=ghcr.io/superbrothers/debug
+```
+
+If you like the above command, it is useful to alias the command:
+
+```
+alias kdebug='kubectl run --rm -it debug-$(date +%s) --image=ghcr.io/superbrothers/debug'
+```
+
+Add an ephemeral debugging container to an already running pod:
 
 ```
 kubectl debug mypod -it --image=ghcr.io/superbrothers/debug

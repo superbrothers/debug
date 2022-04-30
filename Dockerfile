@@ -50,7 +50,7 @@ ARG TARGETARCH
 RUN set -x && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go install "github.com/rakyll/hey@${HEY_VERSION}"
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
 RUN set -x && \

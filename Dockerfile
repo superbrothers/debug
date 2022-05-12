@@ -95,7 +95,7 @@ RUN set -x && \
     rm duf.deb
 
 # renovate: datasource=github-releases depName=sharkdp/bat
-ARG BAT_VERSION=v0.20.0
+ARG BAT_VERSION=v0.21.0
 RUN set -x && \
     curl -L -o bat.deb "https://github.com/sharkdp/bat/releases/download/${BAT_VERSION}/bat_${BAT_VERSION/v/}_${TARGETARCH}.deb" && \
     dpkg -i bat.deb && \

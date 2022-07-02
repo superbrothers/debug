@@ -33,6 +33,16 @@ RUN set -x && \
     chmod +x kubectl && \
     ./kubectl version --client
 
+FROM curlbase AS etcdctl
+ARG TARGETARCH
+# renovate: datasource=github-releases depName=etcd-io/etcd
+ARG ETCD_VERSION=v3.5.4
+RUN set -x && \
+    curl -sL "https://storage.googleapis.com/etcd/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${TARGETARCH}.tar.gz" | \
+      tar xvzf - "etcd-${ETCD_VERSION}-linux-amd64/etcdctl" --strip-components=1 && \
+    chmod +x etcdctl && \
+    ./etcdctl version
+
 FROM golang:1.18 AS hey
 # renovate: datasource=github-releases depName=rakyll/hey
 ARG HEY_VERSION=v0.1.4
@@ -98,6 +108,7 @@ COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=gping /home/curl_user/gping /usr/local/bin/gping
 COPY --from=starship /home/curl_user/starship /usr/local/bin/starship
 COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/kubectl
+COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/kubectl
 
 # settings for starship
 RUN set -x && \

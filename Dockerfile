@@ -74,6 +74,7 @@ RUN set -x && \
         net-tools \
         netcat \
         nmap \
+        nvtop \
         openssh-client \
         strace \
         sysbench \

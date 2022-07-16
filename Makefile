@@ -2,7 +2,7 @@ REGISTRY ?= ghcr.io/superbrothers
 IMAGE ?= $(REGISTRY)/debug
 ARCH ?= amd64
 ALL_ARCH ?= amd64 arm64
-# renovate: datasource=docker depName=docker.io/multiarch/qemu-user-static versioning=docker
+# renovate: datasource=docker depName=docker.io/multiarch/qemu-user-static
 QEMU_VERSION ?= 5.2.0-2
 
 DOCKER_BUILDX_BUILD_FLAGS :=

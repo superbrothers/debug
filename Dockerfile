@@ -39,7 +39,7 @@ ARG TARGETARCH
 ARG ETCD_VERSION=v3.5.4
 RUN set -x && \
     curl -sL "https://storage.googleapis.com/etcd/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${TARGETARCH}.tar.gz" | \
-      tar xvzf - "etcd-${ETCD_VERSION}-linux-amd64/etcdctl" --strip-components=1 && \
+      tar xvzf - "etcd-${ETCD_VERSION}-linux-${TARGETARCH}/etcdctl" --strip-components=1 && \
     chmod +x etcdctl && \
     ./etcdctl version
 

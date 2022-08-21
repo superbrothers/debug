@@ -43,7 +43,7 @@ RUN set -x && \
     chmod +x etcdctl && \
     ./etcdctl version
 
-FROM golang:1.18 AS hey
+FROM golang:1.19 AS hey
 # renovate: datasource=github-releases depName=rakyll/hey
 ARG HEY_VERSION=v0.1.4
 ARG TARGETOS

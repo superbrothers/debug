@@ -1,6 +1,6 @@
 FROM rust:1.63 AS rustbase
 
-FROM curlimages/curl:7.84.0 AS curlbase
+FROM curlimages/curl:7.85.0 AS curlbase
 WORKDIR /home/curl_user
 
 FROM rustbase AS bandwhich

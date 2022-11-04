@@ -1,4 +1,4 @@
-FROM rust:1.64 AS rustbase
+FROM rust:1.65 AS rustbase
 
 FROM curlimages/curl:7.86.0 AS curlbase
 WORKDIR /home/curl_user

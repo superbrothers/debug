@@ -1,14 +1,5 @@
-FROM rust:1.65 AS rustbase
-
 FROM curlimages/curl:7.86.0 AS curlbase
 WORKDIR /home/curl_user
-
-FROM rustbase AS bandwhich
-# renovate: datasource=crate depName=bandwhich
-ARG BANDWHICH_VERSION=0.20.0
-RUN set -x && \
-    cargo install bandwhich --version "${BANDWHICH_VERSION}" && \
-    /usr/local/cargo/bin/bandwhich --version
 
 FROM curlbase AS gping
 # renovate: datasource=github-releases depName=orf/gping
@@ -104,7 +95,6 @@ RUN set -x && \
     rm bat.deb
 
 COPY --from=hey /go/bin/hey /usr/local/bin/hey
-COPY --from=bandwhich /usr/local/cargo/bin/bandwhich /usr/local/bin/bandwhich
 COPY --from=gping /home/curl_user/gping /usr/local/bin/gping
 COPY --from=starship /home/curl_user/starship /usr/local/bin/starship
 COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/kubectl

@@ -3,7 +3,7 @@ IMAGE ?= $(REGISTRY)/debug
 ARCH ?= amd64
 ALL_ARCH ?= amd64 arm64
 # renovate: datasource=docker depName=docker.io/multiarch/qemu-user-static versioning=regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)-(?<build>\d+)$
-QEMU_VERSION ?= 7.1.0-2
+QEMU_VERSION ?= 7.2.0-1
 
 DOCKER_BUILDX_BUILD_FLAGS :=
 ifeq ($(PULL_CACHE),1)

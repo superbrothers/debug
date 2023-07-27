@@ -1,4 +1,4 @@
-FROM curlimages/curl:8.00.1 AS curlbase
+FROM curlimages/curl:8.2.1 AS curlbase
 WORKDIR /home/curl_user
 
 FROM curlbase AS gping

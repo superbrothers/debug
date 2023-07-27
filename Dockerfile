@@ -75,6 +75,7 @@ RUN set -x && \
         traceroute \
         tree \
         vim \
+        wget \
         && \
     rm -rf /var/lib/apt/lists/*
 

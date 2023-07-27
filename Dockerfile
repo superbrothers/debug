@@ -55,6 +55,7 @@ RUN set -x && \
         dhcpdump \
         dnsutils \
         git \
+        gnupg \
         htop \
         iotop \
         iperf \
@@ -94,6 +95,10 @@ RUN set -x && \
     curl -L -o bat.deb "https://github.com/sharkdp/bat/releases/download/${BAT_VERSION}/bat_${BAT_VERSION/v/}_${TARGETARCH}.deb" && \
     dpkg -i bat.deb && \
     rm bat.deb
+
+RUN set -x && \
+    curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
+    apt-get install -y --no-install-recommends speedtest
 
 COPY --from=hey /go/bin/hey /usr/local/bin/hey
 COPY --from=gping /home/curl_user/gping /usr/local/bin/gping

@@ -54,6 +54,14 @@ RUN set -x && \
 
 FROM ghcr.io/stern/stern:1.26.0 AS stern
 
+FROM curlbase AS k9s
+ARG TARGETARCH
+# renovate: datasource=github-releases depName=derailed/k9s
+ARG K9S_VERSION=v0.27.4
+RUN set -x && \
+    curl -sL "https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_${TARGETARCH}.tar.gz" | tar xzf - && \
+    ./k9s --version
+
 FROM ubuntu:22.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
@@ -120,6 +128,7 @@ COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/kubectl
 COPY --from=kustomize /app/kustomize /usr/local/bin/kustomize
 COPY --from=helm /home/curl_user/helm /usr/local/bin/
 COPY --from=stern /usr/local/bin/stern /usr/local/bin/
+COPY --from=k9s /home/curl_user/k9s /usr/local/bin/
 
 # settings for starship
 RUN set -x && \

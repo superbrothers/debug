@@ -42,6 +42,8 @@ ARG TARGETARCH
 RUN set -x && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go install "github.com/rakyll/hey@${HEY_VERSION}"
 
+FROM registry.k8s.io/kustomize/kustomize:v5.1.1 AS kustomize
+
 FROM ubuntu:22.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
@@ -105,6 +107,7 @@ COPY --from=gping /home/curl_user/gping /usr/local/bin/gping
 COPY --from=starship /home/curl_user/starship /usr/local/bin/starship
 COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/kubectl
 COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/kubectl
+COPY --from=kustomize /app/kustomize /usr/local/bin/kustomize
 
 # settings for starship
 RUN set -x && \

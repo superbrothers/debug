@@ -62,6 +62,16 @@ RUN set -x && \
     curl -sL "https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_${TARGETARCH}.tar.gz" | tar xzf - && \
     ./k9s --version
 
+FROM docker.io/library/docker:24-cli AS docker-cli
+
+FROM curlbase AS nerdctl
+ARG TARGETARCH
+# renovate: datasource=github-releases depName=containerd/nerdctl
+ARG NERDCTL_VERSION=v1.5.0
+RUN set -x && \
+    curl -sL "https://github.com/containerd/nerdctl/releases/download/${NERDCTL_VERSION}/nerdctl-${NERDCTL_VERSION//v}-linux-${TARGETARCH}.tar.gz" | tar xzf - && \
+    ./nerdctl --version
+
 FROM ubuntu:22.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
@@ -130,6 +140,8 @@ COPY --from=kustomize /app/kustomize /usr/local/bin/
 COPY --from=helm /home/curl_user/helm /usr/local/bin/
 COPY --from=stern /usr/local/bin/stern /usr/local/bin/
 COPY --from=k9s /home/curl_user/k9s /usr/local/bin/
+COPY --from=docker /usr/local/bin/docker /usr/local/bin/
+COPY --from=nerdctl /home/curl_user/nerdctl /usr/local/bin/
 
 COPY config/bashrc /root/.bashrc.local
 RUN set -x && \

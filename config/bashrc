@@ -3,3 +3,11 @@ source <(kubectl completion bash)
 source <(helm completion bash)
 source <(kustomize completion bash)
 eval "$(starship init bash)"
+
+if [[ -e /host/run/docker.sock ]]; then
+  export DOCKER_HOST=unix:///host/run/docker.sock
+fi
+
+if [[ -e /host/run/containerd/containerd.sock ]]; then
+  export CONTAINERD_ADDRESS=unix:///host/run/containerd/containerd.sock
+fi

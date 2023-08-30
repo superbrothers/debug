@@ -1,0 +1,5 @@
+. /usr/share/bash-completion/bash_completion
+source <(kubectl completion bash)
+source <(helm completion bash)
+source <(kustomize completion bash)
+eval "$(starship init bash)"

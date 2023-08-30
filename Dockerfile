@@ -44,6 +44,14 @@ RUN set -x && \
 
 FROM registry.k8s.io/kustomize/kustomize:v5.1.1 AS kustomize
 
+FROM curlbase AS helm
+ARG TARGETARCH
+# renovate: datasource=github-releases depName=helm/helm
+ARG HELM_VERSION=v3.12.3
+RUN set -x && \
+    curl -sL "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz" | tar xzf - --strip-components 1 "linux-${TARGETARCH}/helm" && \
+    ./helm version
+
 FROM ubuntu:22.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
@@ -108,6 +116,7 @@ COPY --from=starship /home/curl_user/starship /usr/local/bin/starship
 COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/kubectl
 COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/kubectl
 COPY --from=kustomize /app/kustomize /usr/local/bin/kustomize
+COPY --from=helm /home/curl_user/helm /usr/local/bin/
 
 # settings for starship
 RUN set -x && \

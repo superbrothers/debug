@@ -120,12 +120,12 @@ RUN set -x && \
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
     apt-get install -y --no-install-recommends speedtest
 
-COPY --from=hey /go/bin/hey /usr/local/bin/hey
-COPY --from=gping /home/curl_user/gping /usr/local/bin/gping
-COPY --from=starship /home/curl_user/starship /usr/local/bin/starship
-COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/kubectl
-COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/kubectl
-COPY --from=kustomize /app/kustomize /usr/local/bin/kustomize
+COPY --from=hey /go/bin/hey /usr/local/bin/
+COPY --from=gping /home/curl_user/gping /usr/local/bin/
+COPY --from=starship /home/curl_user/starship /usr/local/bin/
+COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/
+COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/
+COPY --from=kustomize /app/kustomize /usr/local/bin/
 COPY --from=helm /home/curl_user/helm /usr/local/bin/
 COPY --from=stern /usr/local/bin/stern /usr/local/bin/
 COPY --from=k9s /home/curl_user/k9s /usr/local/bin/

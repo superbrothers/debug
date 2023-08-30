@@ -69,6 +69,7 @@ RUN set -x && \
     apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
         bash \
+        bash-completion \
         build-essential \
         ca-certificates \
         curl \
@@ -130,7 +131,8 @@ COPY --from=helm /home/curl_user/helm /usr/local/bin/
 COPY --from=stern /usr/local/bin/stern /usr/local/bin/
 COPY --from=k9s /home/curl_user/k9s /usr/local/bin/
 
-# settings for starship
+COPY config/bashrc /root/.bashrc.local
 RUN set -x && \
-    echo 'eval "$(starship init bash)"' >>/root/.bashrc
+    echo ". /root/.bashrc.local" >>/root/.bashrc
+
 COPY config/starship/starship.toml /root/.config/starship.toml

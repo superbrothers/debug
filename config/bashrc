@@ -11,3 +11,7 @@ fi
 if [[ -e /host/run/containerd/containerd.sock ]]; then
   export CONTAINERD_ADDRESS=unix:///host/run/containerd/containerd.sock
 fi
+
+if [[ -f /host/etc/kubernetes/admin.conf ]]; then
+  export KUBECONFIG=/host/etc/kubernetes/admin.conf
+fi

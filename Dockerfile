@@ -42,7 +42,13 @@ ARG TARGETARCH
 RUN set -x && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go install "github.com/rakyll/hey@${HEY_VERSION}"
 
-FROM registry.k8s.io/kustomize/kustomize:v5.1.1 AS kustomize
+FROM curlbase AS kustomize
+ARG TARGETARCH
+# renovate: datasource=github-releases depName=kubernetes-sigs/kustomize versioning=regex:^kustomize\/v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+ARG KUSTOMIZE_VERSION=v5.1.1
+RUN set -x && \
+    curl -sL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.1.1/kustomize_${KUSTOMIZE_VERSION}_linux_${TARGETARCH}.tar.gz" | tar xzf - && \
+    ./kustomize version
 
 FROM curlbase AS helm
 ARG TARGETARCH
@@ -136,7 +142,7 @@ COPY --from=gping /home/curl_user/gping /usr/local/bin/
 COPY --from=starship /home/curl_user/starship /usr/local/bin/
 COPY --from=kubectl /home/curl_user/kubectl /usr/local/bin/
 COPY --from=etcdctl /home/curl_user/etcdctl /usr/local/bin/
-COPY --from=kustomize /app/kustomize /usr/local/bin/
+COPY --from=kustomize /home/curl_user/kustomize /usr/local/bin/
 COPY --from=helm /home/curl_user/helm /usr/local/bin/
 COPY --from=stern /usr/local/bin/stern /usr/local/bin/
 COPY --from=k9s /home/curl_user/k9s /usr/local/bin/

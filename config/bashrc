@@ -15,3 +15,11 @@ fi
 if [[ -f /host/etc/kubernetes/admin.conf ]]; then
   export KUBECONFIG=/host/etc/kubernetes/admin.conf
 fi
+
+if [[ -f /host/etc/kubernetes/pki/etcd/ca.crt ]]; then
+  export ETCDCTL_API=3
+  export ETCDCTL_DIAL_TIMEOUT=3s
+  export ETCDCTL_CACERT=/host/etc/kubernetes/pki/etcd/ca.crt
+  export ETCDCTL_CERT=/host/etc/kubernetes/pki/etcd/healthcheck-client.crt
+  export ETCDCTL_KEY=/host/etc/kubernetes/pki/etcd/healthcheck-client.key
+fi

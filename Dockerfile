@@ -107,6 +107,7 @@ RUN set -x && \
         nvtop \
         openssh-client \
         strace \
+        stress-ng \
         sysbench \
         sysstat \
         tcpdump \

@@ -100,6 +100,7 @@ RUN set -x && \
         iproute2 \
         iptables \
         iputils-ping \
+        jq \
         less \
         net-tools \
         netcat \

@@ -66,7 +66,7 @@ ARG TARGETARCH
 ARG K9S_VERSION=v0.30.3
 RUN set -x && \
     curl -sL "https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_${TARGETARCH}.tar.gz" | tar xzf - && \
-    ./k9s --version
+    ./k9s version
 
 FROM docker.io/library/docker:24-cli AS docker-cli
 

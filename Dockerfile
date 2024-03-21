@@ -10,7 +10,7 @@ RUN set -x && \
 
 FROM curlbase AS starship
 # renovate: datasource=github-releases depName=starship/starship
-ARG STARSHIP_VERSION=v1.17.1
+ARG STARSHIP_VERSION=v1.18.0
 RUN set -x && \
     curl -sL https://github.com/starship/starship/releases/download/${STARSHIP_VERSION}/starship-$(uname -m)-unknown-linux-musl.tar.gz | tar xz starship && \
     ./starship --version

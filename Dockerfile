@@ -68,7 +68,7 @@ RUN set -x && \
     curl -sL "https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_${TARGETARCH}.tar.gz" | tar xzf - && \
     ./k9s version
 
-FROM docker.io/library/docker:25-cli AS docker-cli
+FROM docker.io/library/docker:26-cli AS docker-cli
 
 FROM curlbase AS nerdctl
 ARG TARGETARCH

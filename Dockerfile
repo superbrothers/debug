@@ -53,7 +53,7 @@ RUN set -x && \
 FROM curlbase AS helm
 ARG TARGETARCH
 # renovate: datasource=github-releases depName=helm/helm
-ARG HELM_VERSION=v3.14.3
+ARG HELM_VERSION=v3.14.4
 RUN set -x && \
     curl -sL "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz" | tar xzf - --strip-components 1 "linux-${TARGETARCH}/helm" && \
     ./helm version

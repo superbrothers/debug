@@ -58,7 +58,7 @@ RUN set -x && \
     curl -sL "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz" | tar xzf - --strip-components 1 "linux-${TARGETARCH}/helm" && \
     ./helm version
 
-FROM ghcr.io/stern/stern:1.28.0 AS stern
+FROM ghcr.io/stern/stern:1.29.0 AS stern
 
 FROM curlbase AS k9s
 ARG TARGETARCH

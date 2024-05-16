@@ -91,6 +91,7 @@ RUN set -x && \
         curl \
         dhcpdump \
         dnsutils \
+        fio \
         git \
         gnupg \
         htop \

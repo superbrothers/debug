@@ -27,7 +27,7 @@ RUN set -x && \
 FROM curlbase AS etcdctl
 ARG TARGETARCH
 # renovate: datasource=github-releases depName=etcd-io/etcd
-ARG ETCD_VERSION=v3.5.13
+ARG ETCD_VERSION=v3.5.14
 RUN set -x && \
     curl -sL "https://storage.googleapis.com/etcd/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${TARGETARCH}.tar.gz" | \
       tar xvzf - "etcd-${ETCD_VERSION}-linux-${TARGETARCH}/etcdctl" --strip-components=1 && \

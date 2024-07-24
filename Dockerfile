@@ -78,7 +78,7 @@ RUN set -x && \
     curl -sL "https://github.com/containerd/nerdctl/releases/download/${NERDCTL_VERSION}/nerdctl-${NERDCTL_VERSION//v}-linux-${TARGETARCH}.tar.gz" | tar xzf - && \
     ./nerdctl --version
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
 ARG TARGETARCH
 RUN set -x && \

@@ -78,8 +78,8 @@ RUN set -x && \
     curl -sL "https://github.com/containerd/nerdctl/releases/download/${NERDCTL_VERSION}/nerdctl-${NERDCTL_VERSION//v}-linux-${TARGETARCH}.tar.gz" | tar xzf - && \
     ./nerdctl --version
 
-FROM ubuntu:22.04
-LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
+FROM ubuntu:24.04
+LABEL org.opencontainers.image.source=https://github.com/superbrothers/debug
 ARG TARGETARCH
 RUN set -x && \
     apt update && \
@@ -104,7 +104,7 @@ RUN set -x && \
         jq \
         less \
         net-tools \
-        netcat \
+        netcat-traditional \
         nmap \
         nvtop \
         openssh-client \
@@ -138,7 +138,7 @@ RUN set -x && \
 
 RUN set -x && \
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
-    apt-get install -y --no-install-recommends speedtest
+    apt-get install -y --no-install-recommends speedtest-cli
 
 COPY --from=hey /go/bin/hey /usr/local/bin/
 COPY --from=gping /home/curl_user/gping /usr/local/bin/

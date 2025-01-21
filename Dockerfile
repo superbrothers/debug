@@ -79,7 +79,7 @@ RUN set -x && \
     ./nerdctl --version
 
 FROM ubuntu:24.04
-LABEL org.opencontainers.image.source https://github.com/superbrothers/debug
+LABEL org.opencontainers.image.source=https://github.com/superbrothers/debug
 ARG TARGETARCH
 RUN set -x && \
     apt update && \
@@ -104,7 +104,7 @@ RUN set -x && \
         jq \
         less \
         net-tools \
-        netcat \
+        netcat-traditional \
         nmap \
         nvtop \
         openssh-client \

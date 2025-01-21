@@ -138,7 +138,7 @@ RUN set -x && \
 
 RUN set -x && \
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
-    apt-get install -y --no-install-recommends speedtest
+    apt-get install -y --no-install-recommends speedtest-cli
 
 COPY --from=hey /go/bin/hey /usr/local/bin/
 COPY --from=gping /home/curl_user/gping /usr/local/bin/

@@ -103,6 +103,7 @@ RUN set -x && \
         iputils-ping \
         jq \
         less \
+        mysql-client \
         net-tools \
         netcat-traditional \
         nmap \

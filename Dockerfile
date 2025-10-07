@@ -18,7 +18,7 @@ RUN set -x && \
 FROM curlbase AS kubectl
 ARG TARGETARCH
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-ARG KUBECTL_VERSION=v1.32.1
+ARG KUBECTL_VERSION=v1.34.1
 RUN set -x && \
     curl -sLO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" && \
     chmod +x kubectl && \

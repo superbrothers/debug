@@ -63,7 +63,7 @@ FROM ghcr.io/stern/stern:1.33.1 AS stern
 FROM curlbase AS k9s
 ARG TARGETARCH
 # renovate: datasource=github-releases depName=derailed/k9s
-ARG K9S_VERSION=v0.40.8
+ARG K9S_VERSION=v0.50.16
 RUN set -x && \
     curl -sL "https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_${TARGETARCH}.tar.gz" | tar xzf - && \
     ./k9s version

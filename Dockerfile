@@ -73,7 +73,7 @@ FROM docker.io/library/docker:28-cli AS docker-cli
 FROM curlbase AS nerdctl
 ARG TARGETARCH
 # renovate: datasource=github-releases depName=containerd/nerdctl
-ARG NERDCTL_VERSION=v2.0.3
+ARG NERDCTL_VERSION=v2.1.6
 RUN set -x && \
     curl -sL "https://github.com/containerd/nerdctl/releases/download/${NERDCTL_VERSION}/nerdctl-${NERDCTL_VERSION//v}-linux-${TARGETARCH}.tar.gz" | tar xzf - && \
     ./nerdctl --version

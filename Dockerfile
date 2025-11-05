@@ -124,7 +124,7 @@ RUN set -x && \
 SHELL ["/bin/bash", "-c"]
 
 # renovate: datasource=github-releases depName=muesli/duf
-ARG DUF_VERSION=v0.8.1
+ARG DUF_VERSION=v0.9.1
 RUN set -x && \
     curl -L -o duf.deb "https://github.com/muesli/duf/releases/download/${DUF_VERSION}/duf_${DUF_VERSION/v/}_linux_${TARGETARCH}.deb" && \
     dpkg -i duf.deb && \

@@ -36,7 +36,7 @@ RUN set -x && \
 
 FROM golang:1.26 AS hey
 # renovate: datasource=github-releases depName=rakyll/hey
-ARG HEY_VERSION=v0.1.4
+ARG HEY_VERSION=v0.1.5
 ARG TARGETOS
 ARG TARGETARCH
 RUN set -x && \
